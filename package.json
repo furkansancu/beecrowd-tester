@@ -4,14 +4,15 @@
   "description": "Helps you to test your beecrowd solution scripts without having a headache.",
   "main": "./src/index.js",
   "scripts": {
-    "test": "node -r esm ./src/index.js ./test/test.js 1001"
+    "test": "node -r esm ./src/index.js"
   },
   "repository": "git@github.com:furkansancu/beecrowd-tester.git",
   "author": "furkansancu <furkansancu@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^5.2.0",
+    "chalk": "4.1.0",
     "esm": "^3.2.25",
+    "js-beautify": "^1.14.8",
     "x-ray": "^2.3.4"
   }
 }

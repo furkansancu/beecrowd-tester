@@ -1,11 +1,17 @@
-var argv = process.argv.slice(2);
+import GetInputs from "./components/GetInputs.js";
+import ExecuteLanguage from "./components/ExecuteLangs.js";
+import ConsoleHandler from "./components/ConsoleHandler.js";
 
-import GetInAndOutput from "./components/getinputs";
-import EditAndRunJS from "./components/editandrunjs";
+const argvs = process.argv.slice(2);
 
-async function TestScript (args) {
-    const expects = await GetInAndOutput(args[1]);
-    await EditAndRunJS(args[0], expects);
+const file = argvs[0];
+const challange_id = argvs[1];
+const lang = argvs[2];
+
+async function TestScript () {
+    const expects = await GetInputs(challange_id);
+    const result = await ExecuteLanguage(file, expects, lang);
+    if (result) ConsoleHandler.PromptSuccess();
 }
 
-TestScript(argv);
+TestScript();
