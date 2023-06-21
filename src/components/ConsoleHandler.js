@@ -14,7 +14,7 @@ const ConsoleHandler = {
     },
 
     PromptTest (input, expected, output) {
-        let print = chalk.gray("TEST: ");
+        let print = chalk.gray("TEST CASE: ");
         print += chalk.blue(`(${Util.PurifyString(input)}) => (${Util.PurifyString(expected)}) `)
         print += chalk.yellow(`| YOUR RESULT: ${Util.PurifyString(output)} `)
         if (expected == output)

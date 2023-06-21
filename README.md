@@ -13,7 +13,7 @@ Helps you to test your beecrowd solution scripts without having a headache.
 node -r esm src/index.js [script-path] [beecrowd-test-id] [lang-code]
 ```
 ##### Examples:
-- `node -r esm src/index.js test.js 1000 nodejs`
+- `node -r esm src/index.js test/test.js 1000 nodejs`
 
 ### Supported Languages
 We only support NodeJS, Javascript at the moment lol.

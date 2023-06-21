@@ -12,8 +12,32 @@ async function ExecuteLanguage (filepath, expects, lang) {
         case "node":
         case "nodejs":
         case "node":
+            await CheckJS();
             return await ExecuteJS(filepath, expects);
     }
+}
+
+async function CheckJS () {
+    const error = () => ConsoleHandler.ThrowError(
+        "NodeJS could not be reached.",
+        "Before testing your script, Please install NodeJS from this link: https://nodejs.org/en"
+        + "\n    This error might be also appear if Nodejs is not in the PATH.");
+    await new Promise(resolve => {
+        exec("node --version", (err, stdout, stderr) => {
+            if (err || stderr) error();
+
+            try {
+                // Check version
+                const version1 = parseInt(stdout.split(".")[0].slice(1));
+                const version2 = parseInt(stdout.split(".")[1]);
+                if (version1 < 8) error();
+                else if (version1 == 8 && version2 < 4) error();
+                else resolve(true);
+            } catch {
+                error();
+            }
+        });
+    });
 }
 
 async function ExecuteJS (filepath, expects) {
