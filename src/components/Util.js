@@ -2,7 +2,7 @@ import fs from 'fs';
 const beautify = require('js-beautify/js').js;
 
 const Util = {
-    clearFilesFromError (str, filename = "temp.js") {
+    ClearFilesFromError (str, filename = "temp.js") {
         str.split('\n').filter(line => line.indexOf( filename ) == -1).join('\n');
     },
 
@@ -12,7 +12,7 @@ const Util = {
 
     PurifyString (str) {
         return str.replace("\n", " \\n ");
-    }
+    },
 }
 
 export default Util;

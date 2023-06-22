@@ -58,7 +58,7 @@ async function ExecuteJS (filepath, expects) {
         try {
             await new Promise(resolve => {
                 const child = exec("node", (err, stdout, stderr) => {
-                    if (err) ConsoleHandler.ThrowError("", clearFilesFromError(err.message));
+                    if (err) ConsoleHandler.ThrowError("", Util.ClearFilesFromError(err.message));
                     const result = stdout.slice(0, stdout.length - 1);
                     const success = expect[1] == result;
 

@@ -1,3 +1,6 @@
+# Project Spesific
+test/**/*
+
 # Logs
 logs
 *.log
