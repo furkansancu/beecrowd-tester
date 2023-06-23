@@ -13,14 +13,16 @@ class Console {
     }
 
     TestResult (input: string, expected: string, output: string) {
-        let print = "TEST CASE: ".gray;
-        print += `(${Util.PurifyString(input)}) => (${Util.PurifyString(expected)}) `.blue
-        print += `| YOUR RESULT: ${Util.PurifyString(output)} `.yellow
-        if (expected == output)
-            print += `| SUCCESSFUL!`.green
-        else
-            print += `| UNSUCCESSFUL`.red
+        input = Util.PurifyString(input);
+        expected = Util.PurifyString(expected);
+        output = Util.PurifyString(output);
 
+        let print = "TEST CASE: ";
+        if (expected == output)
+            print = print.green;
+        else
+            print = print.red;
+        print += `INPUT: ${input.blue} | EXPECTED OUTPUT: ${expected.blue} | RESULT: ${output.blue}`.gray;
         console.log(print);
     }
 

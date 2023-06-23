@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import * as path from 'path';;
+import * as path from 'path';
 
 class FileMenagement {
     temp_folder_location = path.join(process.env.localappdata, "\\beecrowd-tester-cli");
