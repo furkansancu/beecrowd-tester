@@ -5,7 +5,7 @@ Helps you to test your beecrowd solution scripts without having a headache.
 #### ⏳ Installation
 1. Clone the repo by executing `git clone git@github.com:furkansancu/beecrowd-tester.git`
 2. Run `npm install` to fetch dependencies.
-3. Put your scripts inside `test/` folder.
+3. Put your scripts inside `tests/` folder.
 4. Run `npm run test [script-path] [beecrowd-test-id] [lang-code]` command to test your script.
 
 #### 🖐 How to use ?
@@ -13,7 +13,7 @@ Helps you to test your beecrowd solution scripts without having a headache.
 node -r esm src/index.js [script-path] [beecrowd-test-id] [lang-code]
 ```
 ##### Examples:
-- `node -r esm src/index.js test/test.js 1000 nodejs`
+- `node -r esm src/index.js tests/test.js 1000 nodejs`
 
 ### Supported Languages
 We only support NodeJS, Javascript at the moment lol.
