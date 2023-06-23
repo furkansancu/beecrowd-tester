@@ -8,12 +8,13 @@ class FileMenagement {
         return path.join(this.temp_folder_location, file_name);
     }
 
-    async ClearTempFolder () {
-        const folder_items = await fs.promises.readdir(this.temp_folder_location);
+    async InitializeTempFolder () {
+        return await fs.promises.mkdir(this.temp_folder_location, { recursive: true });
+    }
 
-        for (const folder_item in folder_items) {
-            await fs.promises.unlink(path.join(this.temp_folder_location, folder_item));
-        }
+    async ClearTempFolder () {
+        await fs.promises.rm(this.temp_folder_location, { recursive: true });
+        await fs.promises.mkdir(this.temp_folder_location, { recursive: true });
     }
 
     async ReadFile (file_path: string) {
