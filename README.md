@@ -10,13 +10,13 @@ Helps you to test your beecrowd solution scripts without having a headache.
 
 #### 🖐 How to use ?
 ```bash
-node -r esm src/index.js [script-path] [beecrowd-test-id] [lang-code]
+ts-node src/index.ts [script-path] [beecrowd-test-id] [lang-code]
 ```
 ##### Examples:
-- `node -r esm src/index.js tests/test.js 1000 nodejs`
+- `ts-node src/index.ts tests/test.js 1000 nodejs`
 
 ### Supported Languages
-We only support NodeJS, Javascript at the moment lol.
+We only support NodeJS and Javascript at the moment lol.
 If you would like to see your favorite lanugage to be supported in this repo, make sure to [contribute](https://github.com/furkansancu/beecrowd-tester/pulls)
 
 | Language Name | Version | Language Code |
