@@ -10,15 +10,17 @@ class BeecrowdCrawler {
                 ins: ['table tbody td.division p'],
                 outs: ['table tbody td:not(.division) p']
             })
-            .then(results => {
-                results.ins = results.ins.map((x: string) => x.slice(1, -1));
-                results.outs = results.outs.map((x: string) => x.slice(1, -1));
-                const output = results.ins.map((x: string, i: number) => [x, results.outs[i]]);
+            .then((results: { ins: string[], outs: string[] }) => {
+                let output: string[][] = [];
+                for (let i = 0; i < results.ins.length; i++) output.push([]);
+                results.ins.map((value: string, index: number) => { output[index].push(value.slice(1, -1)) });
+                results.outs.map((value: string, index: number) => { output[index].push(value.slice(1, -1)) });
                 resolve(output);
             })
-            .catch(error => {
-                ConsoleMenager.Error("Can not fetch test samples from Beecrowd.", error);
-            })
+            .catch((error: any) => {
+                ConsoleMenager.Error("Can not fetch test samples from Beecrowd.");
+                console.log(error);
+            });
         });
     }
 

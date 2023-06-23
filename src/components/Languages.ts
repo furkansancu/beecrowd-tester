@@ -43,7 +43,7 @@ class JavaScript {
 
         try {
             const shell = await AsyncSpawn("node", ["--version"]);
-            const version = shell['stdout'][0];
+            const version = shell.stdout[0];
 
             // Check version
             const version1 = parseInt(version.split(".")[0].slice(1));
@@ -73,16 +73,17 @@ class JavaScript {
             let script = input + cleared_file;
             const temp_script_path = FileMenager.GetTempFileLocation("temp.js")
             await FileMenager.AddFile(temp_script_path, script);
-            try {
-                const shell = await AsyncSpawn("node", [temp_script_path]);
-                const result = Util.ClearEscapeSequences(shell['stdout'][0]);
-                const success = sample[1] == result;
-                if (!success) allSuccess = false;
+            
+            const shell = await AsyncSpawn("node", [temp_script_path]);
 
-                ConsoleMenager.TestResult(sample[0], sample[1], result);
-            } catch (e) {
-                ConsoleMenager.Error("Could not execute script.", e);
-            }
+            if (shell.stderr.length > 0)
+                ConsoleMenager.Error("Could not execute script.", shell.stderr[shell.stderr.length - 1]);
+
+            const result = Util.ClearEscapeSequences(shell['stdout'][0]);
+            const success = sample[1] == result;
+            if (!success) allSuccess = false;
+
+            ConsoleMenager.TestResult(sample[0], sample[1], result);
         }
 
         return allSuccess;
@@ -108,7 +109,7 @@ class Python {
 
         try {
             const shell = await AsyncSpawn("python", ["--version"]);
-            const version = shell['stdout'][0];
+            const version = shell.stdout[0];
 
             // Check version
             const version1 = parseInt(version.split(".")[0].slice(7));
@@ -117,14 +118,14 @@ class Python {
 
             if (version1 < 3) version_error(version.slice(0, version.length - 2));
             else if (version1 == 3 && version2 < 4) version_error(version.slice(0, version.length - 2));
-            else if (version1 == 3 && version2 == 4 && version2 < 3) version_error(version.slice(0, version.length - 2));
+            else if (version1 == 3 && version2 == 4 && version3 < 3) version_error(version.slice(0, version.length - 2));
             else return true;
         } catch (e) {
             nodejs_error();
         }
     }
 
-    async Run (file_path: string, samples: any) {
+    async Run (file_path: string, samples: string[][]) {
         let original_file: string
 
         try { original_file = await FileMenager.ReadFile(file_path) }
@@ -147,16 +148,17 @@ class Python {
                 
             const temp_script_path = FileMenager.GetTempFileLocation("temp.js")
             await FileMenager.AddFile(temp_script_path, script);
-            try {
-                const shell = await AsyncSpawn("python", [temp_script_path]);
-                const result = Util.ClearEscapeSequences(shell['stdout'][0]);
-                const success = sample[1] == result;
-                if (!success) allSuccess = false;
+            
+            const shell = await AsyncSpawn("python", [temp_script_path]);
 
-                ConsoleMenager.TestResult(sample[0], sample[1], result);
-            } catch (e) {
-                ConsoleMenager.Error("Could not execute script.", e);
-            }
+            if (shell.stderr.length > 0)
+                ConsoleMenager.Error("Could not execute script.", shell.stderr[shell.stderr.length - 1]);
+                
+            const result = Util.ClearEscapeSequences(shell.stdout[0]);
+            const success = sample[1] == result;
+            if (!success) allSuccess = false;
+
+            ConsoleMenager.TestResult(sample[0], sample[1], result);
         }
 
         return allSuccess;
