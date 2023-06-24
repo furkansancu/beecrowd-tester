@@ -1,23 +1,24 @@
 import Util from "./Util";
+import chalk from 'chalk';
 
 class Console {
     Error (message: string, description?: string) {
-        console.log(`ERROR: ${message} ${description != null ? "\n    -> " + description : ""}`);
-        process.exit(1);
+        console.log(`${chalk.red("ERROR:")} ${chalk.white(message)} ${description != null ? chalk.gray("\n    -> " + description) : ""}`);
+        process.exit(0);
     }
 
     TestResult (input: string, expected: string, output: string) {
         input = Util.PurifyString(input);
         expected = Util.PurifyString(expected);
         output = Util.PurifyString(output);
-        const result = expected == output ? "SUCCESS" : "FAIL";
+        const result = expected == output ? chalk.green("SUCCESS") : chalk.red("FAIL");
         
-        console.log(`(TEST CASE - ${result}) INPUT: ${input} | EXPECTED OUTPUT: ${expected} | OUTPUT: ${output}`);
+        console.log(`${chalk.gray("(TEST CASE - ")}${result}${chalk.gray(") INPUT:")} ${chalk.blue(input)} ${chalk.gray("| EXPECTED OUTPUT:")} ${chalk.blue(expected)} ${chalk.gray("| OUTPUT:")} ${chalk.blue(output)}`);
     }
 
     FinalResult (result: boolean) {
-        if (result) console.log(`SUCCESSFUL: ALL TEST RESULTS HAD BEEN SUCCESSFUL!`);
-        else console.log(`UNSUCCESSFUL: SOME TEST RESULTS HAD BEEN FAILED!`);
+        if (result) console.log(`${chalk.green("SUCCESSFUL:")} ${chalk.yellow("ALL TEST RESULTS HAD BEEN SUCCESSFUL!")}`);
+        else console.log(`${chalk.red("UNSUCCESSFUL:")} ${chalk.yellow("SOME TEST RESULTS HAD BEEN FAILED!")}`);
     }
 }
 
