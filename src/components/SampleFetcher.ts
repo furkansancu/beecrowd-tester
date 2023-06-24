@@ -5,7 +5,7 @@ class BeecrowdCrawler {
     async FetchSamples (test_id: number) {
         const fetch_url: string = this.ConstuctUrl(test_id);
 
-        return new Promise(resolve => {
+        const result: string[][] = await new Promise(resolve => {
             x(fetch_url, {
                 ins: ['table tbody td.division p'],
                 outs: ['table tbody td:not(.division) p']
@@ -22,6 +22,13 @@ class BeecrowdCrawler {
                 console.log(error);
             });
         });
+        
+        if (result.length < 1) ConsoleMenager.Error(
+            "Please define a valid challange id.",
+            `Challange (Number: ${test_id}) does not exists.`
+        );
+
+        return result;
     }
 
     ConstuctUrl (test_id: number) {

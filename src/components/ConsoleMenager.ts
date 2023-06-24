@@ -2,7 +2,7 @@ import Util from "./Util";
 
 class Console {
     Error (message: string, description?: string) {
-        console.log(`ERROR: ${message} \n ${description}`);
+        console.log(`ERROR: ${message} ${description != null ? "\n    -> " + description : ""}`);
         process.exit(1);
     }
 
@@ -15,8 +15,9 @@ class Console {
         console.log(`(TEST CASE - ${result}) INPUT: ${input} | EXPECTED OUTPUT: ${expected} | OUTPUT: ${output}`);
     }
 
-    FinalResult () {
-        console.log(`ALL SUCCESS: ALL TEST RESULTS SUCCESSFUL!`);
+    FinalResult (result: boolean) {
+        if (result) console.log(`SUCCESSFUL: ALL TEST RESULTS HAD BEEN SUCCESSFUL!`);
+        else console.log(`UNSUCCESSFUL: SOME TEST RESULTS HAD BEEN FAILED!`);
     }
 }
 
