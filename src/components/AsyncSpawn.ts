@@ -1,25 +1,26 @@
-import { spawn } from 'node:child_process';
+import { spawn } from 'child_process';
 
 async function AsyncSpawn (command: string, options: string[] = []) {
-    return new Promise((resolve, reject) => {
+    let output: {stdout: string[], stderr: string[]} = {stdout: [], stderr: []}
+    await new Promise((resolve, reject) => {
         const shell = spawn(command, options);
-        let output = {stdout: [], stderr: []}
 
         shell.stdout.on('data', data => {
-            output.stdout.push(data.toString("ascii"));
+            output.stdout.push(data.toString("ascii"))
         })
         
         shell.stderr.on('data', data => {
-            output.stdout.push(data.toString("ascii"));
+            output.stderr.push(data.toString("ascii"))
         })
 
-        shell.on('error', reject);
+        shell.on('error', error => { 
+            output = {stdout: [], stderr: [error.message]};
+            resolve(true)
+        });
     
-        shell.on('close', code => {
-            if (code === 0) resolve(output);
-            else resolve(output);
-        })
+        shell.on('close', code => { resolve(true) });
     })
+    return output;
 }
 
 export default AsyncSpawn;

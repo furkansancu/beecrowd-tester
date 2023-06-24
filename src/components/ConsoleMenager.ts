@@ -1,33 +1,24 @@
 import Util from "./Util";
-import 'colorts/lib/string';
+import chalk from 'chalk';
 
 class Console {
     Error (message: string, description?: string) {
-        let print = "ERROR: ".red;
-        print += message.blue;
-        if (description != undefined)
-            print += "\n    " + description.gray;
-        
-        console.log(print);
-        process.exit(1);
+        console.log(`${chalk.red("ERROR:")} ${chalk.white(message)} ${description != null ? chalk.gray("\n    -> " + description) : ""}`);
+        process.exit(0);
     }
 
     TestResult (input: string, expected: string, output: string) {
-        let print = "TEST CASE: ".gray;
-        print += `(${Util.PurifyString(input)}) => (${Util.PurifyString(expected)}) `.blue
-        print += `| YOUR RESULT: ${Util.PurifyString(output)} `.yellow
-        if (expected == output)
-            print += `| SUCCESSFUL!`.green
-        else
-            print += `| UNSUCCESSFUL`.red
-
-        console.log(print);
+        input = Util.PurifyString(input);
+        expected = Util.PurifyString(expected);
+        output = Util.PurifyString(output);
+        const result = expected == output ? chalk.green("SUCCESS") : chalk.red("FAIL");
+        
+        console.log(`${chalk.gray("(TEST CASE - ")}${result}${chalk.gray(") INPUT:")} ${chalk.blue(input)} ${chalk.gray("| EXPECTED OUTPUT:")} ${chalk.blue(expected)} ${chalk.gray("| OUTPUT:")} ${chalk.blue(output)}`);
     }
 
-    FinalResult () {
-        let print = "ALL SUCCESS: ".green;
-        print += "ALL TEST RESULTS SUCCESSFUL!".cyan;
-        console.log(print);
+    FinalResult (result: boolean) {
+        if (result) console.log(`${chalk.green("SUCCESSFUL:")} ${chalk.yellow("ALL TEST RESULTS HAD BEEN SUCCESSFUL!")}`);
+        else console.log(`${chalk.red("UNSUCCESSFUL:")} ${chalk.yellow("SOME TEST RESULTS HAD BEEN FAILED!")}`);
     }
 }
 

@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import * as path from 'path';;
+import * as path from 'path';
 
 class FileMenagement {
     temp_folder_location = path.join(process.env.localappdata, "\\beecrowd-tester-cli");
@@ -23,6 +23,12 @@ class FileMenagement {
 
     async AddFile (file_path: string, content: string) {
         return fs.promises.writeFile(file_path, content, {encoding:'utf8',flag:'w'});
+    }
+
+    async CheckFile (file_path: string) {
+        return fs.promises.access(file_path, fs.constants.R_OK)
+        .then(()=>{return true})
+        .catch(()=>{return false})
     }
 }
 

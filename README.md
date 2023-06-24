@@ -22,6 +22,7 @@ If you would like to see your favorite lanugage to be supported in this repo, ma
 | Language Name | Version | Language Code |
 | ----------- | ----------- | ----------- |
 | Javascript - NodeJS | +8.4.0 | node, nodejs, js |
+| Python | +3.4.3 | py, python, python3 |
 
 ### About the Project
 
