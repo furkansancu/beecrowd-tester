@@ -1,10 +1,11 @@
+const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: './src/index.ts',
     output: {
-        filename: 'index.js',
+        filename: 'cli.js',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
@@ -16,12 +17,9 @@ module.exports = {
             },
         ],
     },
-    externals: [nodeExternals()],
+    externals: [ nodeExternals() ],
+    plugins: [ new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }) ],
     target: 'node',
-    resolve: { 
-        extensions: ['.ts']
-    },
-    optimization: {
-        minimize: false, // enabling this reduces file size and readability
-    },
+    resolve: {  extensions: ['.ts'] },
+    optimization: { minimize: true }
 }

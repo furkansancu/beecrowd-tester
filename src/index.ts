@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import SampleFetcher from "./components/SampleFetcher";
 import Languages from "./components/Languages";
 import ConsoleMenager from "./components/ConsoleMenager";
