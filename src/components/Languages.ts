@@ -48,7 +48,7 @@ class JavaScript {
             // Check version
             const version1 = parseInt(version.split(".")[0].slice(1));
             const version2 = parseInt(version.split(".")[1]);
-            const version3 = parseInt(version.split(".")[2]);
+            // const version3 = parseInt(version.split(".")[2]);
 
             if (version1 < 8) version_error(version);
             else if (version1 == 8 && version2 < 4) version_error(version);
@@ -79,7 +79,7 @@ class JavaScript {
             if (shell.stderr.length > 0)
                 ConsoleMenager.Error("Could not execute script.", shell.stderr[shell.stderr.length - 1]);
 
-            const result = Util.ClearEscapeSequences(shell['stdout'][0]);
+            const result = Util.ClearControlCharacters(shell.stdout[0]);
             const success = sample[1] == result;
             if (!success) allSuccess = false;
 
@@ -99,7 +99,7 @@ class Python {
             );
         }
 
-        const nodejs_error = () => {
+        const python_error = () => {
             ConsoleMenager.Error (
                 `Could not reach Python.`,
                 "Before testing your script, Please install NodeJS from this link: https://python.org/downloads"
@@ -121,7 +121,7 @@ class Python {
             else if (version1 == 3 && version2 == 4 && version3 < 3) version_error(version.slice(0, version.length - 2));
             else return true;
         } catch (e) {
-            nodejs_error();
+            python_error();
         }
     }
 
@@ -151,10 +151,11 @@ class Python {
             
             const shell = await AsyncSpawn("python", [temp_script_path]);
 
-            if (shell.stderr.length > 0)
-                ConsoleMenager.Error("Could not execute script.", shell.stderr[shell.stderr.length - 1]);
-                
-            const result = Util.ClearEscapeSequences(shell.stdout[0]);
+            if (shell.stderr.length > 0) {
+                ConsoleMenager.Error("Could not execute script.", shell.stderr[1]);
+            }
+
+            const result = Util.ClearControlCharacters(shell.stdout[0]);
             const success = sample[1] == result;
             if (!success) allSuccess = false;
 

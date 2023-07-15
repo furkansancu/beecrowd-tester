@@ -6,13 +6,6 @@ class Utilities {
         return text.replace("\n", " \\n ");
     }
 
-    ClearEscapeSequences (text: string) {
-        let result = text;
-        result = result.replaceAll("\n", "");
-        result = result.replaceAll("\r", "");
-        return result;
-    }
-
     async CheckInputs (arguements: string[]) {
         const correct_use = "Correct sytnax: [script_file_path] [challange_id] [code_language]";
         const file_error = () => {ConsoleMenager.Error("Please define a valid script file path.", correct_use)}
@@ -28,6 +21,14 @@ class Utilities {
 
         if (typeof arguements[2] != "string") language_error();
         if (arguements[2].length < 1) language_error();
+    }
+
+    // If there is \n or \r in the beggining or end, remove it.
+    ClearControlCharacters (str: string) {
+        if (str.slice(0, 1) == "\n") str = str.slice(1, str.length)
+        if (str.slice(str.length - 1, str.length) == "\n") str = str.slice(0, str.length - 1)
+        str = str.replace("\r", "");
+        return str
     }
 }
 

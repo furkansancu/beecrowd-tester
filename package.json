@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Helps you to test your beecrowd solution scripts without having a headache.",
   "main": "./src/index.ts",
+  "bin": {
+    "beecrowd-tester": "./dist/cli.js"
+  },
   "scripts": {
     "test": "ts-node ./src/index.ts",
     "build": "webpack --mode=production --node-env=production",
-    "build-test": "node ./dist/index.js"
+    "build-test": "node ./dist/cli.js"
   },
   "repository": "git@github.com:furkansancu/beecrowd-tester.git",
   "author": "furkansancu <furkansancu@outlook.com>",
