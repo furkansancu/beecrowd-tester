@@ -10,7 +10,7 @@
         "sourceMap": false,
         "declaration": false,
         "esModuleInterop": true,
-        "moduleResolution": "node",
+        "moduleResolution": "node"
     },
     "include": [ "src" ],
     "exclude": [ "tests", "node_modules" ]

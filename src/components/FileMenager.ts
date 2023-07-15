@@ -1,8 +1,9 @@
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 
 class FileMenagement {
-    temp_folder_location = path.join(process.env.localappdata, "\\beecrowd-tester-cli");
+    temp_folder_location = path.join(os.tmpdir(), "\\beecrowd-tester-cli");
 
     GetTempFileLocation (file_name: string) {
         return path.join(this.temp_folder_location, file_name);
