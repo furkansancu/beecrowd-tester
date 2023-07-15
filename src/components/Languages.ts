@@ -102,27 +102,34 @@ class Python {
         const python_error = () => {
             ConsoleMenager.Error (
                 `Could not reach Python.`,
-                "Before testing your script, Please install NodeJS from this link: https://python.org/downloads"
-                + "\n    This error might be also appear if Nodejs is not in the PATH."
+                "Before testing your script, Please install Python from this link: https://python.org/downloads"
+                + "\n    This error might be also appear if Python is not in the PATH."
             );
         }
 
+        let version: string;
+
         try {
-            const shell = await AsyncSpawn("python", ["--version"]);
-            const version = shell.stdout[0];
-
-            // Check version
-            const version1 = parseInt(version.split(".")[0].slice(7));
-            const version2 = parseInt(version.split(".")[1]);
-            const version3 = parseInt(version.split(".")[2]);
-
-            if (version1 < 3) version_error(version.slice(0, version.length - 2));
-            else if (version1 == 3 && version2 < 4) version_error(version.slice(0, version.length - 2));
-            else if (version1 == 3 && version2 == 4 && version3 < 3) version_error(version.slice(0, version.length - 2));
-            else return true;
+            const shell_A = await AsyncSpawn("python", ["--version"]);
+            version = shell_A.stdout[0];
         } catch (e) {
-            python_error();
+            try {
+                const shell_B = await AsyncSpawn("python3", ["--version"]);
+                version = shell_B.stdout[0];
+            } catch (e) {
+                python_error();
+            }
         }
+
+        // Check version
+        const version1 = parseInt(version.split(".")[0].slice(7));
+        const version2 = parseInt(version.split(".")[1]);
+        const version3 = parseInt(version.split(".")[2]);
+
+        if (version1 < 3) version_error(version.slice(0, version.length - 2));
+        else if (version1 == 3 && version2 < 4) version_error(version.slice(0, version.length - 2));
+        else if (version1 == 3 && version2 == 4 && version3 < 3) version_error(version.slice(0, version.length - 2));
+        else return true;
     }
 
     async Run (file_path: string, samples: string[][]) {

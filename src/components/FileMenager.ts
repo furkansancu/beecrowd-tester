@@ -14,7 +14,7 @@ class FileMenagement {
     }
 
     async ClearTempFolder () {
-        await fs.promises.rm(this.temp_folder_location, { recursive: true });
+        await fs.promises.rm(this.temp_folder_location, { recursive: true, force: true });
         await fs.promises.mkdir(this.temp_folder_location, { recursive: true });
     }
 
