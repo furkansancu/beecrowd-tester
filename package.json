@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Helps you to test your beecrowd solution scripts without having a headache.",
   "main": "./src/index.ts",
-  "bin": {
-    "beecrowd-tester": "./dist/cli.js"
-  },
+  "bin": "./dist/cli.js",
   "scripts": {
     "test": "ts-node ./src/index.ts",
     "build": "webpack --mode=production --node-env=production",
