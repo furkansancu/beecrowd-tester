@@ -71,7 +71,7 @@ class JavaScript {
         for (const sample of samples) {
             const input = `var input = "${sample[0].replace(/\n/, "\\n")}"\n`;
             let script = input + cleared_file;
-            const temp_script_path = FileMenager.GetTempFileLocation("temp.js")
+            const temp_script_path = FileMenager.GetTempFileLocation("temp.txt")
             await FileMenager.AddFile(temp_script_path, script);
             
             const shell = await AsyncSpawn("node", [temp_script_path]);
@@ -153,7 +153,7 @@ class Python {
             if (queued_inputs.length != foundInputs)
                 ConsoleMenager.Error("Error while parsing python script", "Could not locate enough input() for testing samples.");
                 
-            const temp_script_path = FileMenager.GetTempFileLocation("temp.js")
+            const temp_script_path = FileMenager.GetTempFileLocation("temp.txt")
             await FileMenager.AddFile(temp_script_path, script);
             
             const shell = await AsyncSpawn("python", [temp_script_path]);

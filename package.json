@@ -1,6 +1,6 @@
 {
   "name": "beecrowd-tester",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Helps you to test your beecrowd solution scripts without having a headache.",
   "main": "./src/index.ts",
   "bin": "./dist/cli.js",

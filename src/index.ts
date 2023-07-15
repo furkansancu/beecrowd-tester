@@ -26,8 +26,6 @@ async function TestScript () {
     const Result = await Langauge.Run(file_path, Samples);
     
     ConsoleMenager.FinalResult(Result);
-    
-    await FileMenager.ClearTempFolder();
 }
 
 TestScript();
