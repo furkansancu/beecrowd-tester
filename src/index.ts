@@ -20,10 +20,10 @@ async function TestScript () {
     await FileMenager.InitializeTempFolder();
 
     const Langauge = new Selected_Langauge();
-    await Langauge.Verify();
+    const Command = await Langauge.Verify();
 
     const Samples = await SampleFetcher.FetchSamples(challange_id);
-    const Result = await Langauge.Run(file_path, Samples);
+    const Result = await Langauge.Run(file_path, Samples, Command);
     
     ConsoleMenager.FinalResult(Result);
 }

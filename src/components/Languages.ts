@@ -52,13 +52,13 @@ class JavaScript {
 
             if (version1 < 8) version_error(version);
             else if (version1 == 8 && version2 < 4) version_error(version);
-            else return true;
+            else return "node";
         } catch (e) {
             nodejs_error();
         }
     }
 
-    async Run (file_path: string, samples: any) {
+    async Run (file_path: string, samples: any, command: string) {
         let original_file: string
 
         try { original_file = await FileMenager.ReadFile(file_path) }
@@ -74,7 +74,7 @@ class JavaScript {
             const temp_script_path = FileMenager.GetTempFileLocation("temp.txt")
             await FileMenager.AddFile(temp_script_path, script);
             
-            const shell = await AsyncSpawn("node", [temp_script_path]);
+            const shell = await AsyncSpawn(command, [temp_script_path]);
 
             if (shell.stderr.length > 0)
                 ConsoleMenager.Error("Could not execute script.", shell.stderr[shell.stderr.length - 1]);
@@ -108,18 +108,16 @@ class Python {
         }
 
         let version: string;
+        let command: string;
 
-        try {
-            const shell_A = await AsyncSpawn("python", ["--version"]);
-            version = shell_A.stdout[0];
-        } catch (e) {
-            try {
-                const shell_B = await AsyncSpawn("python3", ["--version"]);
-                version = shell_B.stdout[0];
-            } catch (e) {
-                python_error();
-            }
-        }
+        const shell_A = await AsyncSpawn("python", ["--version"]);
+        const shell_B = await AsyncSpawn("python3", ["--version"]);
+        const shell_C = await AsyncSpawn("py", ["--version"]);
+
+        if (shell_A.stdout.length != 0) { version = shell_A.stdout[0]; command = "python"; }
+        else if (shell_B.stdout.length != 0) { version = shell_B.stdout[0]; command = "python3"; }
+        else if (shell_C.stdout.length != 0) { version = shell_C.stdout[0]; command = "py"; }
+        else python_error();
 
         // Check version
         const version1 = parseInt(version.split(".")[0].slice(7));
@@ -129,10 +127,10 @@ class Python {
         if (version1 < 3) version_error(version.slice(0, version.length - 2));
         else if (version1 == 3 && version2 < 4) version_error(version.slice(0, version.length - 2));
         else if (version1 == 3 && version2 == 4 && version3 < 3) version_error(version.slice(0, version.length - 2));
-        else return true;
+        else return command;
     }
 
-    async Run (file_path: string, samples: string[][]) {
+    async Run (file_path: string, samples: string[][], command: string) {
         let original_file: string
 
         try { original_file = await FileMenager.ReadFile(file_path) }
@@ -156,7 +154,7 @@ class Python {
             const temp_script_path = FileMenager.GetTempFileLocation("temp.txt")
             await FileMenager.AddFile(temp_script_path, script);
             
-            const shell = await AsyncSpawn("python", [temp_script_path]);
+            const shell = await AsyncSpawn(command, [temp_script_path]);
 
             if (shell.stderr.length > 0) {
                 ConsoleMenager.Error("Could not execute script.", shell.stderr[1]);
