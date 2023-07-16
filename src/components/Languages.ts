@@ -142,7 +142,7 @@ class Python {
             let queued_inputs = sample[0].split("\n");
             let foundInputs = 0;
             const regex = /input\((.*?)\)/mg;
-            const script = original_file.replaceAll(regex, ( ) => {
+            const script = original_file.replace(regex, ( ) => {
                 const queue = queued_inputs[foundInputs]
                 foundInputs++;
                 return `"${queue}"`;
